@@ -1,4 +1,5 @@
-const wordsC = [
+window.wordLists = window.wordLists || {};
+window.wordLists['C'] = [
     { dutch: "het cadeau", english: "present / gift" },
     { dutch: "het café", english: "cafe / pub" },
     { dutch: "de caissière", english: "box office assistant" },

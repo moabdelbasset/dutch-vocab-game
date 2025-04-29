@@ -25,51 +25,50 @@
   <p class="feedback" id="feedback"></p>
   <button onclick="nextWord()">Next Word</button>
 
+  <script src="words/a.js"></script>
+  <script src="words/b.js"></script>
+  <script src="words/c.js"></script>
+
   <script>
     let words = [];
     let currentIndex = 0;
 
     function loadWords() {
-      const letter = document.getElementById("letter-select").value;
-      const script = document.createElement("script");
-      script.src = `words/${letter}.js`;
-
-      script.onload = () => {
-        if (window["words" + letter.toUpperCase()]) {
-          words = window["words" + letter.toUpperCase()];
-          nextWord();
-        } else {
-          console.error(`words${letter.toUpperCase()} is not defined`);
-        }
-      };
-
-      document.body.appendChild(script);
+      const letter = document.getElementById("letter-select").value.toUpperCase();
+      if (window.wordLists && window.wordLists[letter]) {
+        words = window.wordLists[letter];
+        nextWord();
+      } else {
+        console.error(`No words found for letter ${letter}`);
+        words = [];
+        document.getElementById("word").innerText = "";
+      }
     }
-
 
     function nextWord() {
       if (words.length === 0) return;
-      currentIndex = Math.floor(Math.random() * words.length);
-      document.getElementById("word").innerText = `What does \"${words[currentIndex].dutch}\" mean in English?`;
+      const currentIndex = Math.floor(Math.random() * words.length);
+      document.getElementById("word").innerText = `What does "${words[currentIndex].dutch}" mean in English?`;
       document.getElementById("answer").value = "";
       document.getElementById("feedback").innerText = "";
     }
 
     function checkAnswer() {
       const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-      const correctAnswer = words[currentIndex].english.toLowerCase();
-
-      if (userAnswer === correctAnswer) {
+      const correctAnswer = words.find(word => word.dutch === document.getElementById("word").innerText.split('"')[1]);
+      if (correctAnswer && userAnswer === correctAnswer.english.toLowerCase()) {
         document.getElementById("feedback").innerText = "✅ Correct!";
         document.getElementById("feedback").style.color = "green";
       } else {
-        document.getElementById("feedback").innerText = `❌ Wrong! Correct answer: ${correctAnswer}`;
+        document.getElementById("feedback").innerText = `❌ Wrong! Correct answer: ${correctAnswer ? correctAnswer.english : "Unknown"}`;
         document.getElementById("feedback").style.color = "red";
       }
     }
 
+
     // Automatically load 'A' words on first load
-    window.onload = loadWords;
+    window.wordLists = window.wordLists || {};
+
   </script>
 </body>
 </html>

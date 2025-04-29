@@ -1,4 +1,5 @@
-const wordsB = [
+window.wordLists = window.wordLists || {};
+window.wordLists['B'] = [
     { dutch: "de baan", english: "job" },
     { dutch: "de baas", english: "boss" },
     { dutch: "het bad", english: "bath" },
