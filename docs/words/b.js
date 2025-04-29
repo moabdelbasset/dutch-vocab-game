@@ -96,4 +96,4 @@ const wordsB = [
     { dutch: "de buurman", english: "neighbour (m)" },
     { dutch: "de buurt", english: "neighbourhood" },
     { dutch: "de buurvrouw", english: "neighbour (f)" },
-  ];    
+  ];

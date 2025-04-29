@@ -16,7 +16,7 @@
   <select id="letter-select" onchange="loadWords()">
     <option value="a">A</option>
     <option value="b">B</option> 
-    
+    <option value="c">C</option> 
   </select>
 
   <p id="word"></p>
@@ -33,13 +33,19 @@
       const letter = document.getElementById("letter-select").value;
       const script = document.createElement("script");
       script.src = `words/${letter}.js`;
-      document.body.appendChild(script);
 
       script.onload = () => {
-        words = window["words" + letter.toUpperCase()];
-        nextWord();
+        if (window["words" + letter.toUpperCase()]) {
+          words = window["words" + letter.toUpperCase()];
+          nextWord();
+        } else {
+          console.error(`words${letter.toUpperCase()} is not defined`);
+        }
       };
+
+      document.body.appendChild(script);
     }
+
 
     function nextWord() {
       if (words.length === 0) return;
