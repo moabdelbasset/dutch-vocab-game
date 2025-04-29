@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dutch Vocabulary Quiz</title>
+  <style>
+    body { font-family: Arial; max-width: 500px; margin: 50px auto; padding: 20px; text-align: center; }
+    input, button { padding: 10px; margin: 10px 0; width: 100%; }
+    .feedback { font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Dutch to English Quiz</h2>
+  <p id="word"></p>
+  <input type="text" id="answer" placeholder="Enter the English meaning">
+  <button onclick="checkAnswer()">Check</button>
+  <p class="feedback" id="feedback"></p>
+  <button onclick="nextWord()">Next Word</button>
+
+  <script>
+    const words = [
+      { dutch: "eten", english: "to eat" },
+      { dutch: "huis", english: "house" },
+      { dutch: "vriend", english: "friend" },
+      { dutch: "werken", english: "to work" },
+      { dutch: "fiets", english: "bicycle" },
+      { dutch: "drinken", english: "to drink" },
+      { dutch: "wonen", english: "to live" },
+      { dutch: "slapen", english: "to sleep" },
+      { dutch: "school", english: "school" },
+      { dutch: "dokter", english: "doctor" }
+    ];
+
+    let currentIndex = 0;
+
+    function nextWord() {
+      currentIndex = Math.floor(Math.random() * words.length);
+      document.getElementById("word").innerText = `What does \"${words[currentIndex].dutch}\" mean in English?`;
+      document.getElementById("answer").value = "";
+      document.getElementById("feedback").innerText = "";
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+      const correctAnswer = words[currentIndex].english.toLowerCase();
+
+      if (userAnswer === correctAnswer) {
+        document.getElementById("feedback").innerText = "✅ Correct!";
+        document.getElementById("feedback").style.color = "green";
+      } else {
+        document.getElementById("feedback").innerText = `❌ Wrong! Correct answer: ${correctAnswer}`;
+        document.getElementById("feedback").style.color = "red";
+      }
+    }
+
+    // Show the first word
+    nextWord();
+  </script>
+</body>
+</html>
