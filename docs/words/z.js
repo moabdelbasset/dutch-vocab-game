@@ -1,5 +1,4 @@
-window.wordLists = window.wordLists || {};
-window.wordLists['Z'] = [
+var wordsZ = [
     { dutch: "de zaak", english: "shop / store" },
     { dutch: "de zaal", english: "room, hall" },
     { dutch: "het zadel", english: "seat" },

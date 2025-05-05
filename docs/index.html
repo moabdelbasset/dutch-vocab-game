@@ -32,19 +32,19 @@
   <script>
     let currentWords = [];
     let currentIndex = 0;
-
-        function loadLetter() {
+  
+    function loadLetter() {
       const letter = document.getElementById("letterSelect").value;
       if (!letter) return;
-
+  
       currentWords = [];
       document.getElementById("word").innerText = "Loading...";
-
+  
       const existingScript = document.getElementById("letterScript");
       if (existingScript) existingScript.remove();
-
+  
       const script = document.createElement("script");
-      script.src = `words/${letter}.js`;  // <-- this is the key change
+      script.src = `words/${letter}.js`;
       script.id = "letterScript";
       script.onload = () => {
         const globalVar = `words${letter.toUpperCase()}`;
@@ -60,8 +60,7 @@
       };
       document.body.appendChild(script);
     }
-
-
+  
     function nextWord() {
       if (!currentWords.length) return;
       currentIndex = Math.floor(Math.random() * currentWords.length);
@@ -69,12 +68,12 @@
       document.getElementById("answer").value = "";
       document.getElementById("feedback").innerText = "";
     }
-
+  
     function checkAnswer() {
       const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
       const correctAnswer = currentWords[currentIndex].english.toLowerCase();
       const feedback = document.getElementById("feedback");
-
+  
       if (userAnswer === correctAnswer) {
         feedback.innerText = "✅ Correct!";
         feedback.style.color = "green";
@@ -83,6 +82,6 @@
         feedback.style.color = "red";
       }
     }
-  </script>
+  </script>  
 </body>
 </html>

@@ -1,5 +1,4 @@
-window.wordLists = window.wordLists || {};
-window.wordLists['L'] = [
+var wordsL = [
     { dutch: "laag", english: "low" },
     { dutch: "laat", english: "late" },
     { dutch: "laatst", english: "last" },

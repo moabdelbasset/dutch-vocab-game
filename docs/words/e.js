@@ -1,5 +1,4 @@
-window.wordLists = window.wordLists || {};
-window.wordLists['E'] = [
+var wordsE = [
     { dutch: "echt", english: "real" },
     { dutch: "een", english: "a(n)" },
     { dutch: "eens", english: "(usually untranslated)" },
