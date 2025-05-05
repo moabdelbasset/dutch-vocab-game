@@ -1,0 +1,21 @@
+window.wordLists = window.wordLists || {};
+window.wordLists['J'] = [
+    { dutch: "ja", english: "yes" },
+    { dutch: "ja hoor", english: "yes / yes of course" },
+    { dutch: "het jaar", english: "year" },
+    { dutch: "jarig zijn", english: "to have a birthday" },
+    { dutch: "de jas", english: "coat" },
+    { dutch: "jawel", english: "oh yes" },
+    { dutch: "je", english: "you / your, yourself, yourselves" },
+    { dutch: "de jeuk", english: "itch" },
+    { dutch: "jeuken", english: "to itch" },
+    { dutch: "jij", english: "you (sing)" },
+    { dutch: "jong", english: "young" },
+    { dutch: "de jongen", english: "boy" },
+    { dutch: "jongen", english: "litter" },
+    { dutch: "jou", english: "you" },
+    { dutch: "jouw", english: "your (sing)" },
+    { dutch: "juist", english: "precisely" },
+    { dutch: "jullie", english: "you (pl), your (pl)" },
+  ];
+  
