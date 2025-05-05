@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dutch Vocabulary Quiz</title>
   <style>
     body { font-family: Arial; max-width: 500px; margin: 50px auto; padding: 20px; text-align: center; }
@@ -13,10 +13,14 @@
 <body>
   <h2>Dutch to English Quiz</h2>
 
-  <select id="letter-select" onchange="loadWords()">
-    <option value="a">A</option>
-    <option value="b">B</option> 
-    <option value="c">C</option> 
+  <label for="letterSelect">Choose a letter:</label>
+  <select id="letterSelect" onchange="loadLetter()">
+    <option value="">--Select a letter--</option>
+    <!-- Add A-Z -->
+    <script>
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      document.write(alphabet.split('').map(letter => `<option value="${letter.toLowerCase()}">${letter}</option>`).join(''));
+    </script>
   </select>
 
   <p id="word"></p>
@@ -25,70 +29,60 @@
   <p class="feedback" id="feedback"></p>
   <button onclick="nextWord()">Next Word</button>
 
-  <script src="words/a.js"></script>
-  <script src="words/b.js"></script>
-  <script src="words/c.js"></script>
-  <script src="words/d.js"></script>
-  <script src="words/e.js"></script>
-  <script src="words/f.js"></script>
-  <script src="words/g.js"></script>
-  <script src="words/h.js"></script>
-  <script src="words/i.js"></script>
-  <script src="words/j.js"></script>
-  <script src="words/k.js"></script>
-  <script src="words/l.js"></script>
-  <script src="words/m.js"></script>
-  <script src="words/n.js"></script>
-  <script src="words/o.js"></script>
-  <script src="words/p.js"></script>
-  <script src="words/q.js"></script>
-  <script src="words/r.js"></script>
-  <script src="words/s.js"></script>
-  <script src="words/t.js"></script>
-  <script src="words/u.js"></script>
-  <script src="words/v.js"></script> 
-  <script src="words/w.js"></script>
-  <script src="words/z.js"></script>
   <script>
-    let words = [];
+    let currentWords = [];
     let currentIndex = 0;
 
-    function loadWords() {
-      const letter = document.getElementById("letter-select").value.toUpperCase();
-      if (window.wordLists && window.wordLists[letter]) {
-        words = window.wordLists[letter];
-        nextWord();
-      } else {
-        console.error(`No words found for letter ${letter}`);
-        words = [];
-        document.getElementById("word").innerText = "";
-      }
+        function loadLetter() {
+      const letter = document.getElementById("letterSelect").value;
+      if (!letter) return;
+
+      currentWords = [];
+      document.getElementById("word").innerText = "Loading...";
+
+      const existingScript = document.getElementById("letterScript");
+      if (existingScript) existingScript.remove();
+
+      const script = document.createElement("script");
+      script.src = `words/${letter}.js`;  // <-- this is the key change
+      script.id = "letterScript";
+      script.onload = () => {
+        const globalVar = `words${letter.toUpperCase()}`;
+        currentWords = window[globalVar];
+        if (currentWords?.length) {
+          nextWord();
+        } else {
+          document.getElementById("word").innerText = "No words found.";
+        }
+      };
+      script.onerror = () => {
+        document.getElementById("word").innerText = "Failed to load words.";
+      };
+      document.body.appendChild(script);
     }
 
+
     function nextWord() {
-      if (words.length === 0) return;
-      const currentIndex = Math.floor(Math.random() * words.length);
-      document.getElementById("word").innerText = `What does "${words[currentIndex].dutch}" mean in English?`;
+      if (!currentWords.length) return;
+      currentIndex = Math.floor(Math.random() * currentWords.length);
+      document.getElementById("word").innerText = `What does "${currentWords[currentIndex].dutch}" mean in English?`;
       document.getElementById("answer").value = "";
       document.getElementById("feedback").innerText = "";
     }
 
     function checkAnswer() {
       const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-      const correctAnswer = words.find(word => word.dutch === document.getElementById("word").innerText.split('"')[1]);
-      if (correctAnswer && userAnswer === correctAnswer.english.toLowerCase()) {
-        document.getElementById("feedback").innerText = "✅ Correct!";
-        document.getElementById("feedback").style.color = "green";
+      const correctAnswer = currentWords[currentIndex].english.toLowerCase();
+      const feedback = document.getElementById("feedback");
+
+      if (userAnswer === correctAnswer) {
+        feedback.innerText = "✅ Correct!";
+        feedback.style.color = "green";
       } else {
-        document.getElementById("feedback").innerText = `❌ Wrong! Correct answer: ${correctAnswer ? correctAnswer.english : "Unknown"}`;
-        document.getElementById("feedback").style.color = "red";
+        feedback.innerText = `❌ Wrong! Correct answer: ${correctAnswer}`;
+        feedback.style.color = "red";
       }
     }
-
-
-    // Automatically load 'A' words on first load
-    window.wordLists = window.wordLists || {};
-
   </script>
 </body>
 </html>
