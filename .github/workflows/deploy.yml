@@ -3,14 +3,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # or master, depending on your repo
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write  # Grant the token the required permission
-      contents: read   # Ensure the token also has read access to contents
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
